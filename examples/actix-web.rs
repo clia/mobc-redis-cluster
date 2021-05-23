@@ -1,8 +1,10 @@
 use actix_web::{web, App, HttpServer, Responder};
-use mobc_redis::RedisConnectionManager;
-use mobc_redis::{redis, Connection};
+use mobc_redis_cluster::RedisClusterConnectionManager;
+use mobc_redis_cluster::{redis, Connection};
 
-type Pool = mobc::Pool<RedisConnectionManager>;
+use redis_cluster_async::{Client, redis::cmd};
+
+type Pool = mobc::Pool<RedisClusterConnectionManager>;
 
 async fn ping(pool: web::Data<Pool>) -> impl Responder {
     let mut conn = pool.get().await.unwrap();
@@ -17,8 +19,10 @@ async fn ping(pool: web::Data<Pool>) -> impl Responder {
 
 #[actix_rt::main]
 async fn main() {
-    let client = redis::Client::open("redis://127.0.0.1/").unwrap();
-    let manager = RedisConnectionManager::new(client);
+    let nodes = vec!["redis://127.0.0.1:7000", "redis://127.0.0.1:7001", "redis://127.0.0.1:7002", "redis://127.0.0.1:7003", "redis://127.0.0.1:7004", "redis://127.0.0.1:7005"];
+
+    let client = Client::open(nodes).unwrap();
+    let manager = RedisClusterConnectionManager::new(client);
     let pool = Pool::builder().max_open(100).build(manager);
 
     HttpServer::new(move || {

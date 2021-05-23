@@ -1,22 +1,23 @@
 [package]
-name = "mobc-redis"
+name = "mobc-redis-cluster"
 version = "0.5.0"
-authors = ["importcjj <importcjj@gmail.com>"]
+authors = ["Rogério Ferreira <rogerio.ferreira@ibm.com>"]
 edition = "2018"
 readme = "README.md"
 license = "MIT/Apache-2.0"
 description = "Redis support for the mobc connection pool"
-repository = "https://github.com/importcjj/mobc-redis"
-keywords = ["postgres", "pool", "database", "async", "await"]
+repository = "https://github.com/rogeriob2br/mobc-redis-cluster"
+keywords = ["redis", "pool", "database", "async", "await"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-mobc = "0.5"
-redis = "0.14.0"
+mobc = "0.7.2"
+redis = "0.20.1"
+redis_cluster_async="0.6.0"
 
 [dev-dependencies]
 actix-web = "2.0.0"
 actix-rt = "1.0"
 actix-http = "1.0"
-tokio = { version = "0.2", features = ["full"] }
+tokio = { version = "1.6", features = ["full"] }
