@@ -1,7 +1,5 @@
-mobc-redis
+mobc-redis-cluster
 =============
-
-[![Build Status](https://travis-ci.com/importcjj/mobc-redis.svg?token=ZZrg3rRkUA8NUGrjEsU9&branch=master)](https://travis-ci.com/importcjj/mobc-redis) [![crates.io](https://img.shields.io/badge/crates.io-latest-%23dea584)](https://crates.io/crates/mobc-redis)
 
 [Documentation](https://docs.rs/mobc-redis)
 
@@ -9,14 +7,18 @@ mobc-redis
 
 ```rust
 use mobc::Pool;
-use mobc_redis::RedisConnectionManager;
-use mobc_redis::{redis, Connection};
+use mobc_redis_cluster::RedisClusterConnectionManager;
+use mobc_redis_cluster::{Connection};
 use std::time::Instant;
+use redis_cluster_async::{Client, redis::cmd};
+
 
 #[tokio::main]
 async fn main() {
-    let client = redis::Client::open("redis://127.0.0.1/").unwrap();
-    let manager = RedisConnectionManager::new(client);
+    let nodes = vec!["redis://127.0.0.1:7000", "redis://127.0.0.1:7001", "redis://127.0.0.1:7002", "redis://127.0.0.1:7003", "redis://127.0.0.1:7004", "redis://127.0.0.1:7005"];
+
+    let client = Client::open(nodes).unwrap();
+    let manager = RedisClusterConnectionManager::new(client);
     let pool = Pool::builder().max_open(100).build(manager);
 
     const MAX: usize = 5000;
@@ -42,5 +44,6 @@ async fn main() {
 
     println!("cost: {:?}", now.elapsed());
 }
+
 
 ```
