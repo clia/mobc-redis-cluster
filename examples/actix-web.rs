@@ -7,7 +7,7 @@ use redis_cluster_async::{Client, redis::cmd};
 type Pool = mobc::Pool<RedisClusterConnectionManager>;
 
 async fn ping(pool: web::Data<Pool>) -> impl Responder {
-    let mut conn = pool.get().await.unwrap();
+        let mut conn = pool.get().await.unwrap();
     match redis::cmd("PING")
         .query_async::<_, String>(&mut conn as &mut Connection)
         .await
