@@ -1,6 +1,8 @@
 mobc-redis-cluster
 =============
 
+This fork not to reexport redis. Traits from redis will conflict.
+
 [Documentation](https://docs.rs/mobc-redis)
 
 ## Example
