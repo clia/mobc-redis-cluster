@@ -1,8 +1,8 @@
 use actix_web::{web, App, HttpServer, Responder};
 use mobc_redis_cluster::RedisClusterConnectionManager;
-use mobc_redis_cluster::{redis, Connection};
+use mobc_redis_cluster::Connection;
 
-use redis_cluster_async::{Client, redis::cmd};
+use redis_cluster_async::Client;
 
 type Pool = mobc::Pool<RedisClusterConnectionManager>;
 

@@ -1,6 +1,6 @@
 use mobc::async_trait;
 use mobc::Manager;
-pub use redis;
+// pub use redis;
 
 pub use redis_cluster_async::{Client,Connection};
 
