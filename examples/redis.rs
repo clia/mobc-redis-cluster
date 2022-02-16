@@ -2,7 +2,7 @@ use mobc::Pool;
 use mobc_redis_cluster::RedisClusterConnectionManager;
 use mobc_redis_cluster::{Connection};
 use std::time::Instant;
-use redis_cluster_async::{Client, redis::cmd};
+use redis_cluster_async::Client;
 
 
 #[tokio::main]
@@ -19,7 +19,7 @@ async fn main() {
     let (tx, mut rx) = tokio::sync::mpsc::channel::<usize>(16);
     for i in 0..MAX {
         let pool = pool.clone();
-        let mut tx_c = tx.clone();
+        let tx_c = tx.clone();
         tokio::spawn(async move {
             let mut conn = pool.get().await.unwrap();
             let s: String = redis::cmd("PING")

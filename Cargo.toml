@@ -13,8 +13,8 @@ keywords = ["redis", "pool", "database", "async", "await"]
 
 [dependencies]
 mobc = "0.7.2"
-redis = "0.20.1"
-redis_cluster_async="0.6.0"
+redis = { version = "0.21", features = ["tokio-comp"] }
+redis_cluster_async = { git = "https://github.com/clia/redis-cluster-async.git" }
 
 [dev-dependencies]
 actix-web = "2.0.0"
